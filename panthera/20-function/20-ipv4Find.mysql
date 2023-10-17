@@ -1,0 +1,20 @@
+CREATE OR REPLACE FUNCTION `ipv4Find`(
+  IA TINYINT UNSIGNED,
+  IB TINYINT UNSIGNED,
+  IC TINYINT UNSIGNED,
+  ID TINYINT UNSIGNED
+) RETURNS BIGINT UNSIGNED MODIFIES SQL DATA
+BEGIN
+    RETURN (SELECT `ipv4s`.`id`
+      FROM 
+        `ipv4s`
+       WHERE 
+           `ipv4s`.`a` = IA
+       AND
+           `ipv4s`.`b` = IB
+       AND
+           `ipv4s`.`c` = IC
+       AND
+           `ipv4s`.`d` = ID
+       LIMIT 1);
+END;

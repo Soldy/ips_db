@@ -1,0 +1,29 @@
+CREATE OR REPLACE FUNCTION `ipv4Add`(
+  IA TINYINT UNSIGNED,
+  IB TINYINT UNSIGNED,
+  IC TINYINT UNSIGNED,
+  ID TINYINT UNSIGNED
+) RETURNS BIGINT UNSIGNED MODIFIES SQL DATA
+BEGIN
+    DECLARE ipv4_id BIGINT UNSIGNED;
+    SELECT 
+      `ipv4Find`(IA, IB, IC, ID)
+      INTO 
+        ipv4_id;
+    IF ipv4_id IS NULL THEN 
+        INSERT INTO `ipv4s`(
+            `ipv4s`.`a`,
+            `ipv4s`.`b`,
+            `ipv4s`.`c`,
+            `ipv4s`.`d`
+          ) VALUES (
+            IA,
+            IB,
+            IC,
+            ID
+          );
+        SELECT LAST_INSERT_ID() INTO ipv4_id;
+        RETURN ipv4_id;
+    END IF;
+    RETURN ipv4_id;
+END;
