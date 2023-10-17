@@ -1,0 +1,13 @@
+CREATE OR REPLACE VIEW ipv4Show AS SELECT 
+      `ipv4s`.`id` AS `id`,
+      CONCAT(
+         `ipv4s`.`a`,
+         ".",
+         `ipv4s`.`b`,
+         ".",
+         `ipv4s`.`c`,
+         ".",
+         `ipv4s`.`d`
+      )
+    FROM `ipv4s`
+      ORDER BY `ipv4s`.`id` ASC;
