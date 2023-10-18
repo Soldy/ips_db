@@ -1,0 +1,24 @@
+CREATE OR REPLACE FUNCTION `MACaddressAdd`(
+  IMAC VARCHAR(20)
+) RETURNS BIGINT UNSIGNED MODIFIES SQL DATA
+BEGIN
+    DECLARE mac_id BIGINT UNSIGNED;
+    DECLARE mac_address CHAR(12);
+    SELECT `MACaddressInput`(
+      IMAC
+    ) INTO mac_address;
+    SELECT 
+      `MACaddressFind`(IMAC)
+      INTO 
+        mac_id;
+    IF mac_id IS NULL THEN 
+        INSERT INTO `MACaddresses`(
+            `MACaddresses`.`MACaddress`
+          ) VALUES (
+            mac_address
+          );
+        SELECT LAST_INSERT_ID() INTO mac_id;
+        RETURN mac_id;
+    END IF;
+    RETURN mac_id;
+END;

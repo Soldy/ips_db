@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION `MACaddressFind`(
+  IMAC VARCHAR(20)
+) RETURNS BIGINT UNSIGNED MODIFIES SQL DATA
+BEGIN
+    RETURN (SELECT `MACaddresses`.`id`
+      FROM 
+        `MACaddresses`
+       WHERE 
+         `MACaddresses`.`MACaddress` = (
+            SELECT `MACaddressInput`(
+              IMAC
+            )
+         )
+       LIMIT 1);
+END;
+
