@@ -8,6 +8,6 @@ CREATE OR REPLACE VIEW ipv4Show AS SELECT
          `ipv4s`.`c`,
          ".",
          `ipv4s`.`d`
-      )
+      ) AS `ip`
     FROM `ipv4s`
       ORDER BY `ipv4s`.`id` ASC;
