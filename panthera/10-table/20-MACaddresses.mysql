@@ -1,0 +1,6 @@
+CREATE TABLE `MACaddresses` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `MACaddress` CHAR(12) NOT NULL,
+     UNIQUE KEY `id` (`id`),
+     KEY `index` (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

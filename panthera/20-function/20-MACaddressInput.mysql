@@ -1,0 +1,37 @@
+/**
+* This function is responsible for 
+* the correct Mac address formatting.
+* Accept multiple input formats of strings
+* and come back with a 12-character long
+* lowercase char. My expectation the format 
+* is already checked at this point but
+* it's preferable to store just 12 chars 
+* rather than 17.
+* However latter may be storing 6 integers,
+* but because the Mac address is exact not
+* ranges at the moment it does not much
+* benefit from that.
+*/
+
+CREATE OR REPLACE FUNCTION `MACaddressInput`(
+  IMAC VARCHAR(20)
+) RETURNS CHAR(12) MODIFIES SQL DATA
+BEGIN
+    IF LENGTH(IMAC) = 12 THEN 
+        RETURN (
+            SELECT LOWER(IMAC)
+        );
+    END IF;
+    IF LENGTH(IMAC) = 17 THEN
+        RETURN (
+            SELECT LOWER(
+                REPLACE(
+                    IMAC,
+                    ":",
+                    ""
+                )
+            )
+        );
+    END IF;
+    RETURN (SELECT 'aaaaaaaaaaaa');
+END;
