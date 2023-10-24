@@ -51,7 +51,6 @@ jobs:
       - run: ls /etc/apt/
       - run: cat /etc/apt/sources.list
       - run: ls /etc/apt/sources.list.d/
-      - run: git clone https://github.com/Soldy/openPanthera.git
       - run: echo 'SHOW DATABASES;' |mariadb -h mariadb-master -u root --password=test_password 
       - run: echo 'CREATE DATABASE `panthera_test`;' |mariadb -h mariadb-master -u root --password=test_password 
       - run: echo 'SHOW DATABASES;' |mariadb -h mariadb-master -u root --password=test_password 
@@ -60,6 +59,7 @@ jobs:
            cd openPanthera
            python -m pip install -e .
            python -m venv venv
+           python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple openpanthera
            pip install pytest 
       - run: ls openPanthera/venv/bin/
       - run: pytest test.py
