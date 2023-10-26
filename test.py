@@ -2,18 +2,17 @@ import unittest
 import sys
 import os
 import pytest
-import directory as d
-import mariadblib as m
-import hnyconfig as config
+import openPanthera.lib as l
 
 
+schema = l.schema('')
 def test_init():
-    m.initMigrationTable()
+    schema.resolv('init', 'sql')
 def test_createTable():
-    m.buildTable()
+    schema.resolv('build', 'table')
 def test_createFunction():
-    m.buildFunction()
+    schema.resolv('build', 'function')
 def test_createView():
-    m.buildView()
-def test_destroy():
-    m.destroy()
+    schema.resolv('build', 'view')
+def test_createDestroy():
+    schema.resolv('build', 'destroy')
