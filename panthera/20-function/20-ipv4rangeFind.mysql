@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION `ipv4rangeFind`(
+  IASTART TINYINT UNSIGNED,
+  IBSTART TINYINT UNSIGNED,
+  ICSTART TINYINT UNSIGNED,
+  IDSTART TINYINT UNSIGNED,
+  IAEND TINYINT UNSIGNED,
+  IBEND TINYINT UNSIGNED,
+  ICEND TINYINT UNSIGNED,
+  IDEND TINYINT UNSIGNED
+) RETURNS BIGINT UNSIGNED READS SQL DATA
+BEGIN
+    RETURN (SELECT `ipv4ranges`.`id`
+      FROM 
+        `ipv4ranges`
+       WHERE 
+           `ipv4ranges`.`astart` = IASTART
+       AND
+           `ipv4ranges`.`bstart` = IBSTART
+       AND
+           `ipv4ranges`.`cstart` = ICSTART
+       AND
+           `ipv4ranges`.`dstart` = IDSTART
+       AND
+           `ipv4ranges`.`aend` = IAEND
+       AND
+           `ipv4ranges`.`bend` = IBEND
+       AND
+           `ipv4ranges`.`cend` = ICEND
+       AND
+           `ipv4ranges`.`dend` = IDEND
+       LIMIT 1);
+END;

@@ -1,0 +1,63 @@
+CREATE OR REPLACE FUNCTION `ipv4rangeAdd`(
+  IASTART TINYINT UNSIGNED,
+  IBSTART TINYINT UNSIGNED,
+  ICSTART TINYINT UNSIGNED,
+  IDSTART TINYINT UNSIGNED,
+  IAEND TINYINT UNSIGNED,
+  IBEND TINYINT UNSIGNED,
+  ICEND TINYINT UNSIGNED,
+  IDEND TINYINT UNSIGNED
+) RETURNS BIGINT UNSIGNED MODIFIES SQL DATA
+BEGIN
+    DECLARE ipv4range_id BIGINT UNSIGNED;
+    IF (SELECT 
+      `ipv4rangeCheck`(
+          IASTART,
+          IBSTART,
+          ICSTART,
+          IDSTART,
+          IAEND,
+          IBEND,
+          ICEND,
+          IDEND
+    )) = FALSE THEN
+        RETURN 0;
+    END IF;
+    SELECT 
+      `ipv4rangeFind`(
+          IASTART,
+          IBSTART,
+          ICSTART,
+          IDSTART,
+          IAEND,
+          IBEND,
+          ICEND,
+          IDEND
+      )
+      INTO 
+        ipv4range_id;
+    IF ipv4range_id IS NULL THEN 
+        INSERT INTO `ipv4ranges`(
+            `ipv4ranges`.`astart`,
+            `ipv4ranges`.`bstart`,
+            `ipv4ranges`.`cstart`,
+            `ipv4ranges`.`dstart`,
+            `ipv4ranges`.`aend`,
+            `ipv4ranges`.`bend`,
+            `ipv4ranges`.`cend`,
+            `ipv4ranges`.`dend`
+          ) VALUES (
+            IASTART,
+            IBSTART,
+            ICSTART,
+            IDSTART,
+            IAEND,
+            IBEND,
+            ICEND,
+            IDEND
+          );
+        SELECT LAST_INSERT_ID() INTO ipv4range_id;
+        RETURN ipv4range_id;
+    END IF;
+    RETURN ipv4range_id;
+END;
